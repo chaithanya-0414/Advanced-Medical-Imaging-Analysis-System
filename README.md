@@ -151,9 +151,28 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Attention UNet based on [Oktay et al., 2018](https://arxiv.org/abs/1804.03999)
 - Grad-CAM implementation inspired by [Selvaraju et al., 2017](https://arxiv.org/abs/1610.02391)
 
-## 📧 Contact
+## 📧 Contact & Support
 
-For questions or collaboration opportunities, please open an issue or contact the maintainer.
+### Author
+**Chaithanya**
+- GitHub: [@chaithanya-0414](https://github.com/chaithanya-0414)
+- Repository: [Advanced-Medical-Imaging-Analysis-System](https://github.com/chaithanya-0414/Advanced-Medical-Imaging-Analysis-System)
+
+### Get Help
+- **Issues**: Report bugs or request features via [GitHub Issues](https://github.com/chaithanya-0414/Advanced-Medical-Imaging-Analysis-System/issues)
+- **Discussions**: Ask questions in [GitHub Discussions](https://github.com/chaithanya-0414/Advanced-Medical-Imaging-Analysis-System/discussions)
+- **Pull Requests**: Contributions are welcome!
+
+### Citation
+If you use this project in your research or work, please cite:
+```
+@software{chaithanya2024medical_imaging,
+  author = {Chaithanya},
+  title = {Advanced Medical Imaging Analysis System},
+  year = {2024},
+  url = {https://github.com/chaithanya-0414/Advanced-Medical-Imaging-Analysis-System}
+}
+```
 
 ## ⭐ Star History
 
