@@ -7,7 +7,7 @@ torch
 torchvision
 Pillow
 numpy
-opencv-python
+opencv-python-headless
 pydicom
 nibabel
 matplotlib
