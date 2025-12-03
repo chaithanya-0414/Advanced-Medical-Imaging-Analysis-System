@@ -39,6 +39,12 @@ if 'report_data' not in st.session_state:
 model = load_model(device=device)
 if model is None:
     st.error(f"Model not found at {MODEL_PATH}. Train first.")
+    # Debugging for deployment
+    st.write(f"Current working directory: {os.getcwd()}")
+    if os.path.exists("models"):
+        st.write(f"Contents of models directory: {os.listdir('models')}")
+    else:
+        st.write("models directory does not exist!")
     st.stop()
 
 # Load thresholds
