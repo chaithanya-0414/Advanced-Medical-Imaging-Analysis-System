@@ -38,6 +38,7 @@ env/
 
 # PyTorch
 *.pth
+!models/best_model.pth
 *.pt
 checkpoint*.pth
 
