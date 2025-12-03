@@ -36,11 +36,38 @@ if 'report_data' not in st.session_state:
     st.session_state['report_data'] = {}
 
 # Load model
+# Load model
 model = load_model(device=device)
+
+# If cached loading fails, try direct loading (bypassing cache)
+if model is None:
+    st.warning("Cached load_model returned None. Attempting direct load...")
+    if os.path.exists(MODEL_PATH):
+        try:
+            state = torch.load(MODEL_PATH, map_location=device)
+            model = UNet(in_ch=1)
+            if isinstance(state, dict) and any(k.startswith("model_state") or k == "model_state" for k in state.keys()):
+                if "model_state" in state:
+                    model.load_state_dict(state["model_state"])
+                elif "state_dict" in state:
+                    model.load_state_dict(state["state_dict"])
+                else:
+                    model.load_state_dict(state)
+            else:
+                model.load_state_dict(state)
+            model.to(device)
+            model.eval()
+            st.success("Successfully loaded model directly!")
+        except Exception as e:
+            st.error(f"Direct load failed: {e}")
+            model = None
+
 if model is None:
     st.error(f"Model not found at {MODEL_PATH}. Train first.")
     # Debugging for deployment
     st.write(f"Current working directory: {os.getcwd()}")
+    st.write(f"Model Path: {MODEL_PATH}")
+    st.write(f"Model Path Exists: {MODEL_PATH.exists()}")
     if os.path.exists("models"):
         st.write(f"Contents of models directory: {os.listdir('models')}")
     else:
