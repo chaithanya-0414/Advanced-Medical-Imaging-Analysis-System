@@ -1,0 +1,20 @@
+# requirements_advanced.txt
+# Additional dependencies for advanced features
+
+# Existing dependencies (from your requirements.txt)
+streamlit
+torch
+torchvision
+Pillow
+numpy
+opencv-python-headless
+pydicom
+nibabel
+matplotlib
+reportlab
+
+# New dependencies for advanced features
+scikit-image>=0.19.0  # For radiomics (measure, feature)
+scipy>=1.7.0          # For distance transforms and statistics
+scikit-learn>=1.0.0   # For ROC curves, metrics
+tqdm>=4.62.0          # For progress bars (if not already installed)
