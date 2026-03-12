@@ -25,6 +25,7 @@ venv/
 ENV/
 env/
 .venv
+.env
 
 # IDE
 .vscode/
@@ -42,12 +43,18 @@ env/
 *.pt
 checkpoint*.pth
 
-# Data directories (uncomment if you don't want to upload data)
-# data/
-# datasets/
+# Data directories
+data/
+datasets/
+data/raw/
+data/processed/
+data/train/
+data/valid/
+data/test/
 
 # Outputs
 outputs/
+outputs_test/
 temp_*.png
 *.pdf
 
@@ -56,6 +63,7 @@ temp_*.png
 Thumbs.db
 
 # Streamlit
+.streamlit/
 .streamlit/secrets.toml
 
 # Logs

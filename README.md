@@ -96,6 +96,7 @@ python train_advanced.py --loss focal_tversky --model attention_unet --epochs 50
 ├── requirements.txt           # Python dependencies
 ├── ADVANCED_FEATURES.md       # Detailed feature documentation
 ├── QUICKSTART.md              # Quick start guide
+├── PROJECT_SUMMARY.md         # Complete project documentation
 └── PROJECT_SUMMARY.md         # Complete project documentation
 ```
 
