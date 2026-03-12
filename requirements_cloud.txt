@@ -1,7 +1,7 @@
 # Streamlit Cloud Requirements
-# Optimized for cloud deployment with CPU-only PyTorch
+# Optimized for cloud deployment with CPU-only PyTorch and specific version pins
 
-# Core ML & Data Science (CPU-only PyTorch)
+# Core ML & Data Science
 torch>=2.0.0
 torchvision>=0.15.0
 numpy>=1.21.0,<2.0.0
@@ -26,4 +26,3 @@ tqdm>=4.62.0
 
 # Reporting
 fpdf>=1.7.2
-reportlab>=3.6.0
