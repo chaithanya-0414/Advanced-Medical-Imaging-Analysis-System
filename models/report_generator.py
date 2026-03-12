@@ -4,24 +4,24 @@ import tempfile
 from PIL import Image
 import numpy as np
 
+
 class ComprehensiveReportGenerator(FPDF):
     def __init__(self):
         super().__init__()
         self.set_auto_page_break(auto=True, margin=15)
-        self.add_font("Arial", "", "arial.ttf", uni=True) if os.path.exists("arial.ttf") else None
 
     def header(self):
-        self.set_font('Arial', 'B', 15)
+        self.set_font('Helvetica', 'B', 15)
         self.cell(0, 10, 'Advanced Medical Imaging Analysis Report', 0, 1, 'C')
         self.ln(5)
 
     def footer(self):
         self.set_y(-15)
-        self.set_font('Arial', 'I', 8)
+        self.set_font('Helvetica', 'I', 8)
         self.cell(0, 10, f'Page {self.page_no()}', 0, 0, 'C')
 
     def add_section_title(self, title):
-        self.set_font('Arial', 'B', 12)
+        self.set_font('Helvetica', 'B', 12)
         self.set_fill_color(200, 220, 255)
         self.cell(0, 10, title, 0, 1, 'L', fill=True)
         self.ln(5)
@@ -38,15 +38,14 @@ class ComprehensiveReportGenerator(FPDF):
                 image_data = (image_data * 255).astype(np.uint8)
             
             # Handle different channel formats
-            if len(image_data.shape) == 2: # Grayscale
+            if len(image_data.shape) == 2:  # Grayscale
                 img = Image.fromarray(image_data)
             elif len(image_data.shape) == 3:
-                if image_data.shape[0] == 3: # CHW -> HWC
+                if image_data.shape[0] == 3:  # CHW -> HWC
                     image_data = image_data.transpose(1, 2, 0)
-                # RGB or RGBA
                 img = Image.fromarray(image_data)
             else:
-                return # Unsupported format
+                return  # Unsupported format
 
             with tempfile.NamedTemporaryFile(delete=False, suffix=".png") as tmp:
                 img.save(tmp.name)
@@ -57,11 +56,10 @@ class ComprehensiveReportGenerator(FPDF):
             image_path = image_data
 
         try:
-            # Center the image
             x_centered = (210 - width) / 2
             self.image(image_path, x=x_centered, w=width)
             self.ln(2)
-            self.set_font('Arial', 'I', 10)
+            self.set_font('Helvetica', 'I', 10)
             self.cell(0, 5, caption, 0, 1, 'C')
             self.ln(5)
         except Exception as e:
@@ -71,10 +69,11 @@ class ComprehensiveReportGenerator(FPDF):
                 os.remove(temp_path)
 
     def add_key_value(self, key, value):
-        self.set_font('Arial', 'B', 10)
+        self.set_font('Helvetica', 'B', 10)
         self.cell(50, 8, f"{key}:", 0, 0)
-        self.set_font('Arial', '', 10)
+        self.set_font('Helvetica', '', 10)
         self.cell(0, 8, f"{value}", 0, 1)
+
 
 def generate_full_report(filename, data):
     """
@@ -92,8 +91,6 @@ def generate_full_report(filename, data):
         m = data['main']
         pdf.add_key_value("Tumor Pixels", m.get('area_px', 'N/A'))
         pdf.add_key_value("Coverage", f"{m.get('coverage_pct', 0):.2f}%")
-        
-        # Merge local Stage and remote Subtype Info
         pdf.add_key_value("Diagnosis Status", m.get('stage', 'N/A'))
         if 'subtype' in m:
             pdf.add_key_value("Predicted Subtype", m.get('subtype', 'Unknown'))
@@ -113,7 +110,7 @@ def generate_full_report(filename, data):
             
         pdf.add_key_value("Max Activation", f"{gc.get('max_act', 0):.4f}")
         pdf.add_key_value("Mean Activation", f"{gc.get('mean_act', 0):.4f}")
-        pdf.multi_cell(0, 5, "The heatmap above shows regions that most influenced the model's prediction. Red/Yellow areas indicate high importance.")
+        pdf.multi_cell(0, 5, "The heatmap above shows regions that most influenced the model's prediction.")
 
     # --- Page 3: Comprehensive Metrics ---
     if 'metrics' in data:
@@ -121,17 +118,17 @@ def generate_full_report(filename, data):
         pdf.add_section_title("3. Clinical Metrics Evaluation")
         met = data['metrics']
         
-        pdf.set_font('Arial', 'B', 10)
+        pdf.set_font('Helvetica', 'B', 10)
         pdf.cell(0, 8, "Overlap Metrics:", 0, 1)
-        pdf.set_font('Arial', '', 10)
+        pdf.set_font('Helvetica', '', 10)
         pdf.cell(60, 8, f"Dice Coefficient: {met.get('dice', 0):.4f}", 1)
         pdf.cell(60, 8, f"IoU: {met.get('iou', 0):.4f}", 1)
         pdf.cell(60, 8, f"F1 Score: {met.get('f1_score', 0):.4f}", 1)
         pdf.ln(10)
         
-        pdf.set_font('Arial', 'B', 10)
+        pdf.set_font('Helvetica', 'B', 10)
         pdf.cell(0, 8, "Classification Metrics:", 0, 1)
-        pdf.set_font('Arial', '', 10)
+        pdf.set_font('Helvetica', '', 10)
         pdf.cell(60, 8, f"Sensitivity: {met.get('sensitivity', 0):.4f}", 1)
         pdf.cell(60, 8, f"Specificity: {met.get('specificity', 0):.4f}", 1)
         pdf.cell(60, 8, f"Precision: {met.get('precision', 0):.4f}", 1)
@@ -159,21 +156,22 @@ def generate_full_report(filename, data):
         pdf.add_section_title("5. Radiomics Features")
         rad = data['radiomics']
         
-        pdf.set_font('Arial', 'B', 10)
+        pdf.set_font('Helvetica', 'B', 10)
         pdf.cell(0, 8, "Shape Features:", 0, 1)
-        pdf.set_font('Arial', '', 9)
+        pdf.set_font('Helvetica', '', 9)
         pdf.multi_cell(0, 5, f"Area: {rad.get('area_pixels', 0):.0f}\nPerimeter: {rad.get('perimeter', 0):.2f}\nCompactness: {rad.get('compactness', 0):.4f}\nEccentricity: {rad.get('eccentricity', 0):.4f}")
         pdf.ln(5)
         
-        pdf.set_font('Arial', 'B', 10)
+        pdf.set_font('Helvetica', 'B', 10)
         pdf.cell(0, 8, "Intensity Features:", 0, 1)
-        pdf.set_font('Arial', '', 9)
+        pdf.set_font('Helvetica', '', 9)
         pdf.multi_cell(0, 5, f"Mean: {rad.get('mean_intensity', 0):.4f}\nStd Dev: {rad.get('std_intensity', 0):.4f}\nSkewness: {rad.get('skewness', 0):.4f}\nKurtosis: {rad.get('kurtosis', 0):.4f}")
         pdf.ln(5)
         
-        pdf.set_font('Arial', 'B', 10)
+        pdf.set_font('Helvetica', 'B', 10)
         pdf.cell(0, 8, "Texture Features (GLCM):", 0, 1)
-        pdf.set_font('Arial', '', 9)
+        pdf.set_font('Helvetica', '', 9)
         pdf.multi_cell(0, 5, f"Contrast: {rad.get('glcm_contrast', 0):.4f}\nHomogeneity: {rad.get('glcm_homogeneity', 0):.4f}\nEnergy: {rad.get('glcm_energy', 0):.4f}\nCorrelation: {rad.get('glcm_correlation', 0):.4f}")
 
-    return pdf.output(dest="S").encode("latin-1")
+    # fpdf2 API: output returns bytes directly
+    return bytes(pdf.output())
