@@ -52,11 +52,7 @@ Understand where the model "looks" to make its prediction.
 
 ## 🚀 Getting Started
 
-### Installation
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/LungInsight-AI.git
-   cd LungInsight-AI
+
    ```
 2. Install dependencies:
    ```bash
